@@ -1,0 +1,4 @@
+tamahagne.read.csv <- function(file.path= ""){
+
+  return (read.csv(file.path, sep = ",", header = T))
+}
