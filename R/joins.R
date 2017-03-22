@@ -1,6 +1,6 @@
 library(jsonlite)
 library(plyr)
-tamahagane.apply.join.updated.csvVersion<- function(inputFilePath.1, inputFilePath.2, joinType, outputFilePath)
+tamahagane.apply.join <- function(inputFilePath.1, inputFilePath.2, joinType, outputFilePath)
 {
   x <- read.csv(inputFilePath.1)
   y <- read.csv(inputFilePath.2)
