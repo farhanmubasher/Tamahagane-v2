@@ -1,20 +1,20 @@
-
-tamahagane.apply.filter<- function(filePath, columNames, filterType, Values)
+library(jsonlite)
+tamahagane.apply.filter.csvVersion<- function(inputFilePath, columNames, filterType, Values, outputFilePath)
 {
-  converted.Dataset <- read.csv(filePath)
+  converted.Dataset <- read.csv(inputFilePath)
   cols<- fromJSON(columNames)
   converted.filterType <- fromJSON(filterType)
   converted.Values <- fromJSON(Values)
-
+  
   j<-1
   while(j<=length(converted.Values))
   {
     if(converted.filterType[j] == "STARTWITH" | converted.filterType[j] == "ENDWITH")
     {
       obj.start <- paste("^", converted.Values[j] , sep = "")
-      obj.end <- paste(converted.Values[j] , "$", sep = "")
+     obj.end <- paste(converted.Values[j] , "$", sep = "")
     }
-
+    
     j<- j+1
   }
 
@@ -26,7 +26,7 @@ tamahagane.apply.filter<- function(filePath, columNames, filterType, Values)
     }
     else if(converted.filterType[i] == "NOTEQUAL"){
       converted.Dataset <-  subset(converted.Dataset, converted.Dataset[cols[i]] != converted.Values[i])
-    }
+    } 
     else if(converted.filterType[i] == "ISIN"){
       converted.Dataset <-  subset(converted.Dataset, converted.Dataset[cols[i]] == converted.Values[i])
     }
@@ -45,16 +45,15 @@ tamahagane.apply.filter<- function(filePath, columNames, filterType, Values)
     else if(converted.filterType[i] == "ENDWITH"){
       converted.Dataset <- converted.Dataset[grep(obj.end, converted.Dataset[,cols[i]]) ,]
     }
-
+    
     i<- i+1
   }
-
   if(nrow(converted.Dataset) == 0){
-
-    return("No Records Found !!")
+      
+    return( write.table( "No Records Found !!", file = outputFilePath, sep = "," , quote = FALSE, row.names = FALSE, col.names = FALSE))
   }
   else{
-    return(converted.Dataset)
+  return(write.csv(converted.Dataset, file = outputFilePath, quote = FALSE, row.names = FALSE))
   }
 }
 
