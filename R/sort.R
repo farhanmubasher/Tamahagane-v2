@@ -1,7 +1,7 @@
 library(jsonlite)
 library(lubridate)
 
-tamahagane.sort.Date.csvVersion <- function(inputFilePath, columName, sortType, outputFilePath)
+tamahagane.sort <- function(inputFilePath, columName, sortType, outputFilePath)
 {
   Dataset <- read.csv(inputFilePath)
   columName <- fromJSON(columName)
