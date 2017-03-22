@@ -1,5 +1,5 @@
 library(jsonlite)
-tamahagane.apply.filter.csvVersion<- function(inputFilePath, columNames, filterType, Values, outputFilePath)
+tamahagane.apply.filter <- function(inputFilePath, columNames, filterType, Values, outputFilePath)
 {
   converted.Dataset <- read.csv(inputFilePath)
   cols<- fromJSON(columNames)
