@@ -21,7 +21,6 @@ tamahagane.sort <- function(inputFilePath, columName, sortType, outputFilePath)
     }
     else
     {
-      
       if(sortType=="ASC" || sortType=="")
       {
         return (write.csv(Dataset[order(Dataset[, columName]) ,], file = outputFilePath, quote = FALSE, row.names = FALSE) )
@@ -32,7 +31,6 @@ tamahagane.sort <- function(inputFilePath, columName, sortType, outputFilePath)
       }
         
       }
-    
   }
   else if (is.null(check) || check== FALSE){
     
