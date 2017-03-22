@@ -1,12 +1,12 @@
-
+library(jsonlite)
 library(lubridate)
 
-tamahagane.apply.sort<- function(filePath, columName, sortType)
+tamahagane.sort.Date.csvVersion <- function(inputFilePath, columName, sortType, outputFilePath)
 {
-  Dataset <- read.csv(filePath)
+  Dataset <- read.csv(inputFilePath)
   columName <- fromJSON(columName)
   sortType <- fromJSON(sortType)
-
+  
   check  <- tryCatch({
     !all(is.na(as.Date(Dataset[, columName],format="%d/%m/%Y")))
   }, error=function(e){NULL})
@@ -17,35 +17,32 @@ tamahagane.apply.sort<- function(filePath, columName, sortType)
     count.misssing.values  <- colSums(is.na(Dataset[columName]))
     if(count.misssing.values >= 1)
     {
-      return ("Date Format is not Correct")
+      return( write.table( "Date Formate is Not Correct !!", file = outputFilePath, sep = ",", quote = FALSE, row.names = FALSE, col.names = FALSE))
     }
     else
     {
-
+      
       if(sortType=="ASC" || sortType=="")
       {
-        return (Dataset[order(Dataset[, columName]) ,])
+        return (write.csv(Dataset[order(Dataset[, columName]) ,], file = outputFilePath, quote = FALSE, row.names = FALSE) )
       }
       else(sortType=="DESC")
       {
-        return (Dataset[rev(order(Dataset[, columName]))  ,])
+        return (write.csv(Dataset[rev(order(Dataset[, columName]))  ,] , file = outputFilePath, quote = FALSE, row.names = FALSE))
       }
-
-    }
-
+        
+      }
+    
   }
-
   else if (is.null(check) || check== FALSE){
-
+    
     if(sortType=="ASC" || sortType=="")
     {
-      return (Dataset[order(Dataset[, columName]) ,])
+      return (write.csv(Dataset[order(Dataset[, columName]) ,] , file = outputFilePath, quote = FALSE, row.names = FALSE))
     }
     else(sortType=="DESC")
     {
-      return (Dataset[rev(order(Dataset[, columName]))  ,])
+      return (write.csv(Dataset[rev(order(Dataset[, columName]))  ,], file = outputFilePath, quote = FALSE, row.names = FALSE))
     }
   }
-
-
 }
